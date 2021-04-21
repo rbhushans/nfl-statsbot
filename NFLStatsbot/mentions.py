@@ -13,7 +13,7 @@ import os
 
 import os
 import sentry_sdk
-# sentry_sdk.init(os.environ['SENTRY_DSN'])
+sentry_sdk.init(os.environ['SENTRY_DSN'])
 
 logging.basicConfig(filename="bot.log",
                     filemode='a',
@@ -127,7 +127,7 @@ def post_error(api, tweet):
 
 def main():
     api = create_api()
-    since_id = 1384541614824214533#int(os.getenv("SINCE_ID"))
+    since_id = int(os.getenv("SINCE_ID"))
     while True:
         try:
             since_id = check_mentions(api, since_id)

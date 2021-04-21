@@ -46,7 +46,9 @@ def main():
 
 if __name__ == "__main__":
     # check if every 20 minutes
+    print("Running Tweeter")
     curr_flag = int(os.getenv("TIME_INTERVAL_FLAG"))
+    print("Running. Flag is", curr_flag)
     if curr_flag == 0:
         os.environ["TIME_INTERVAL_FLAG"] = str(1)
         exit()

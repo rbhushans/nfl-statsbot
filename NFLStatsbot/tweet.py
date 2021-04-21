@@ -46,14 +46,15 @@ def main():
 
 if __name__ == "__main__":
     # check if every 20 minutes
-    print("Running Tweeter")
-    curr_flag = int(os.getenv("TIME_INTERVAL_FLAG"))
-    print("Running. Flag is", curr_flag)
+    file = open('data/TIME_INTERVAL_FLAG')
+    curr_flag = int(file.readline())
+    file.close()
+    file = open('data/TIME_INTERVAL_FLAG', 'w')
     if curr_flag == 0:
-        os.environ["TIME_INTERVAL_FLAG"] = str(1)
+        file.write("1")
         exit()
     else:
-        os.environ["TIME_INTERVAL_FLAG"] = str(0)
+        file.write("0")
         main()
 
 

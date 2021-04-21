@@ -817,7 +817,7 @@ def team_stat(name, pos, year, category):
                 if_fg.append("extra_point_attempt")
             elif "td_prob" in cat:
                 if_fg.append("touchdown")
-            print(data["defteam"].unique())
+
             if pos:
                 df = data[['posteam'] + if_fg]
             else:
@@ -828,9 +828,6 @@ def team_stat(name, pos, year, category):
 
             df = df.applymap(lambda s:s.lower() if type(s) == str else s)
             df = df[df.eq(abbrev_name).any(1)]
-            print(df.columns)
-            print(df["defteam"].unique())
-            print(df[["defteam", "rush"]])
             stat_sum = get_stat(df, cat, "TEAM")
             fnames = convert_team(act_name, "full").split(" ")
             fnames = [f.capitalize() for f in fnames]

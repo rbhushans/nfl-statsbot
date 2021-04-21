@@ -13,9 +13,6 @@ import logging
 import os
 import sentry_sdk
 sentry_sdk.init(os.environ['SENTRY_DSN'])
-from apscheduler.schedulers.blocking import BlockingScheduler
-
-sched = BlockingScheduler()
 
 logging.basicConfig(filename="bot.log",
                     filemode='a',
@@ -43,14 +40,20 @@ def random_tweet(api):
                 stat = random_stat()
             continue
 
-@sched.scheduled_job('interval', minutes=20)
 def main():
     api = create_api()
-    while True:
-        logger.info("Tweeting random tweet!")
-        random_tweet(api)
+    random_tweet(api)
 
-sched.start()
+if __name__ == "__main__":
+    # check if every 20 minutes
+    curr_flag = int(os.getenv("TIME_INTERVAL_FLAG"))
+    if curr_flag == 0:
+        os.environ["TIME_INTERVAL_FLAG"] = str(1)
+        exit()
+    else:
+        os.environ["TIME_INTERVAL_FLAG"] = str(0)
+        main()
+
 
 
 

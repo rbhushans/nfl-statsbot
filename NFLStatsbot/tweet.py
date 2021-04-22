@@ -9,6 +9,7 @@ from utils import random_stat
 from config import create_api
 import time
 import logging
+import datetime
 
 import os
 import sentry_sdk
@@ -46,15 +47,13 @@ def main():
 
 if __name__ == "__main__":
     # check if every 20 minutes
-    file = open('data/TIME_INTERVAL_FLAG')
-    curr_flag = int(file.readline())
-    file.close()
-    file = open('data/TIME_INTERVAL_FLAG', 'w')
-    if curr_flag == 0:
-        file.write("1")
+    fl = True
+    minute = datetime.datetime.now().minute
+    if (minute < 10) or (minute > 20 and minute < 30) or (minute > 40 and minute < 50):
+        fl = False
+    if fl:
         exit()
     else:
-        file.write("0")
         main()
 
 

@@ -4,6 +4,7 @@ chardet==4.0.0
 click==7.1.2
 cycler==0.10.0
 Cython==0.29.22
+DateTime==4.3
 Flask==1.1.2
 idna==2.10
 itsdangerous==1.1.0
@@ -30,3 +31,4 @@ tweepy==3.10.0
 tzlocal==2.1
 urllib3==1.26.4
 Werkzeug==1.0.1
+zope.interface==5.4.0

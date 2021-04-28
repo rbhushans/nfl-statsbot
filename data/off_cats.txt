@@ -49,14 +49,10 @@ kickoff_in_endzone
 kickoff_out_of_bounds
 kickoff_downed
 kickoff_fair_catch
-fumble_not_forced
-fumble_out_of_bounds
-fumble_lost
 own_kickoff_recovery
 own_kickoff_recovery_td
 rush_attempt
 pass_attempt
-touchdown
 pass_touchdown
 rush_touchdown
 return_touchdown

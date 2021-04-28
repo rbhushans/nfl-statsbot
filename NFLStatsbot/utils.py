@@ -82,7 +82,6 @@ def get_position_all(gsis_id, pbp_id):
     except:
         return None
 
-
 # returns gsis ID and pbp ID of player
 def get_player_id(name, year):
     if year == None:
@@ -168,6 +167,28 @@ def convert_category(s_cat):
     else:
         # print("Too Many Category Matches")
         return possible[0]
+
+def get_player_cats(cat):
+    OFF = ["receiver_id", "receiver_player_id", "passer_id", "passer_player_id", "rusher_id", "rusher_player_id", 
+            "lateral_receiver_player_id", "lateral_rusher_player_id", "punter_player_id", "kicker_player_id"]
+    row = f_categories[(f_categories == cat).any(axis=1)] 
+    item = str(row["player_cat"].values[0])
+    if item == "NA" or item == "nan":
+        return master_player_categories
+    else:
+        r_cats = item.split("|")
+        if len(r_cats) == 0:
+            return master_player_categories
+        cats = []
+        for c in r_cats:
+            if c == "OFF":
+                cats += OFF
+            elif c in all_categories:
+                cats.append(c)
+            else:
+                print("Unrecognized category:", c)
+        return cats
+
 
 # Converts team name from 'name' to opt
 def convert_team(name, opt):
@@ -281,8 +302,6 @@ def joiner(cat, p_or_t, off_team, id, pos):
     if p_or_t == "player":
         if cat == "extra_point_result" or cat == "field_goal_result":
             c = " made "
-        elif cat == "penalty_type":
-            c = " was on the field for "
         elif pos == "QB" and "tackle" in cat:
             c = " was on the field for "
         elif (pos != "QB") and ("pass" in cat or "qb" in cat or cat=="cp") and cat != "qb_hit":
@@ -347,13 +366,7 @@ def player_stat(name, year, category):
     if cat == None:
         print("Error: Invalid Category:", category)
         return None
-    player_categories = master_player_categories[:]
-    specific_cats = ["sack", "tackle", "fumble", "lateral", "qb_hit", "penalty", "pass_defense"]
-    for s_cat in specific_cats:
-        if s_cat not in cat and "safety" not in cat:
-            player_categories = [x for x in player_categories if s_cat not in x]
-    if cat != "touchdown":
-        player_categories = [x for x in player_categories if "td" not in x]
+    player_categories = get_player_cats(cat)
     s_name = name
     names = s_name.split(" ")
     fname = capitalize_name(name)
@@ -394,11 +407,7 @@ def player_stat(name, year, category):
             elif "/play" in cat and "epa" in cat:
                 data = data[player_categories + [cat.replace("/play", "")]]
             elif cat == "reception":
-                data = data[["receiver_id", "receiver_player_id", "passing_yards"]]
-            elif cat == "receiving_yards":
-                data = data[["receiver_id", "receiver_player_id", "receiving_yards"]]
-            elif pos == "QB" and "tackle" in cat:
-                data = data[["passer_player_id", "passer_id"] + [cat]]
+                data = data[player_categories + ["passing_yards"]]
             elif pos == "QB" and "touchdown" in cat:
                 data = data[["interception", "fumble"] + player_categories + [cat]]
             elif cat == "tot_yards":
@@ -443,11 +452,7 @@ def player_stat(name, year, category):
         elif "/play" in cat and "epa" in cat:
             df = data[player_categories + [cat.replace("/play", "")]]
         elif cat == "reception":
-            df = data[["receiver_id", "receiver_player_id", "passing_yards"]]
-        elif cat == "receiving_yards":
-            df = data[["receiver_id", "receiver_player_id", "receiving_yards"]]
-        elif pos == "QB" and "tackle" in cat:
-            df = data[["passer_player_id", "passer_id"] + [cat]]
+            df = data[player_categories + ["passing_yards"]]
         elif pos == "QB" and "touchdown" in cat:
             df = data[["interception", "fumble"] + player_categories + [cat]]
         elif cat == "tot_yards":
@@ -475,7 +480,6 @@ def player_stat(name, year, category):
 
         stat_sum = get_stat(df, cat, pos, gsis_id)
         
-        
         if stat_sum == 1:
             return fname + "(" + pos + ")" + c + str(stat_sum) + " " + format_cat(cat, True, pos=pos) + " in " + str(year) + "."
         else:
@@ -483,7 +487,7 @@ def player_stat(name, year, category):
     return -1
 
 # helper function to get a statistic from the dataframe
-def get_stat(df, cat, pos="DEFAULT", player=""):   
+def get_stat(df, cat, pos="DEFAULT", player=""):  
     epa_play = False
     if "/play" in cat:
         epa_play = True

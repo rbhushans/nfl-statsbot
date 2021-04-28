@@ -5,3 +5,5 @@ plan.txt
 __pycache__/
 bot.log
 .vscode/
+.bot.log.icloud
+*.log

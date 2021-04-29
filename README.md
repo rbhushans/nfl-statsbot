@@ -50,7 +50,6 @@ The Twitter bot currently has three points of main functionality:
 
 ## Future Functionality
 * Multiple Players/Teams Graphs - Include a data visualization comparing multiple players in both the random tweets and statistic requests.
-* Position Option - Currently the bot randomly chooses a player if multiple players with the exact same name are requested (such as Josh Allen). A future release will include the ability to specify exactly which player to select.
 * Smart Category Selection - Random statistics will only select categories that are valid in the random year selected.
 * Week Option - The bot currently only supports Season and Career stats, but a week option will be included in the near future.
 * Playoff Option - The bot currently only support regular season stats, but a playoff option will be included in the near future.

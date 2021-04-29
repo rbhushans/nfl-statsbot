@@ -47,8 +47,8 @@ def check_mentions(api, since_id):
         print(f"{tweet.user.name}:{tweet.text}")
         msg = ""
 
-        play, team, year, cat = utils.mention_parser(tweet.text)
-        print("Parameters: ", str(play), str(team), str(year), str(cat))
+        play, team, year, cat, positions = utils.mention_parser(tweet.text)
+        print("Parameters: ", str(play), str(team), str(year), str(cat), str(positions))
         err = False
 
         if play == [None] and team == [None]:
@@ -67,7 +67,7 @@ def check_mentions(api, since_id):
                         c = c.replace("_allowed", "")
                     for y in year:
                         try:
-                            stat = utils.player_stat(p, y, c)
+                            stat = utils.player_stat(p, y, c, positions[play.index(p)])
                         except:
                             post_error(api, tweet)
                             return new_since_id
@@ -135,7 +135,6 @@ def main():
             time.sleep(10)
         except Exception as e:
             print("Error replying:", e)
-            # print("\tmsg =",msg)
             continue
 
 if __name__ == "__main__":

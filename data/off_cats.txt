@@ -56,6 +56,7 @@ pass_attempt
 pass_touchdown
 rush_touchdown
 return_touchdown
+touchdown
 extra_point_attempt
 two_point_attempt
 field_goal_attempt

@@ -83,7 +83,7 @@ def get_position_all(gsis_id, pbp_id):
         return None
 
 # returns gsis ID and pbp ID of player
-def get_player_id(name, year):
+def get_player_id(name, year, position=None):
     if year == None:
         roster_df = get_full_roster()
         # keys = {"full_name":"teamPlayers.displayName", "gsis_id":"teamPlayers.gsisId", "espn_id":"pbp_id"}
@@ -95,6 +95,7 @@ def get_player_id(name, year):
     name = name.lower()
     rd = roster_df
     rd[keys["full_name"]] = roster_df[keys["full_name"]].str.lower()
+    rd["position"] = roster_df["position"].str.lower()
     rd = roster_df.loc[roster_df[keys['full_name']] == name]
     pd.set_option("display.max_rows", None, "display.max_columns", None)
     # print(rd[list(keys.keys()) + ['position']])
@@ -109,23 +110,50 @@ def get_player_id(name, year):
     if gsis_df.shape[0] != 0 and pbp_df.shape[0] != 0:
         if gsis_df.shape[0] <= 1  or pbp_df.shape[0] <= 1:
             r = 0
-        else:
+            gsis_id = gsis_df[keys['gsis_id']].iloc[r]
+            pbp_id = gsis_df[keys['espn_id']].iloc[r]
+        elif position == None:
             r = random.randint(0,min(gsis_df.shape[0], pbp_df.shape[0])-1)
-        gsis_id = gsis_df[keys['gsis_id']].iloc[r]
-        pbp_id = gsis_df[keys['espn_id']].iloc[r]
+            gsis_id = gsis_df[keys['gsis_id']].iloc[r]
+            pbp_id = gsis_df[keys['espn_id']].iloc[r]
+        else:
+            if position in gsis_df['position'].values:
+                row = gsis_df[(gsis_df == position).any(axis=1)]
+                if len(row) >= 1:
+                    gsis_id = row['gsis_id'].values[0]
+            if position in pbp_df['position'].values:
+                row = pbp_df[(pbp_df == position).any(axis=1)]
+                if len(row) >= 1:
+                    pbp_id = row['espn_id'].values[0]
+            if pbp_id == None:
+                r = random.randint(0,pbp_df.shape[0]-1)
+                pbp_id = pbp_df[keys['espn_id']].iloc[r]
+            if gsis_id == None:
+                r = random.randint(0,pbp_df.shape[0]-1)
+                pbp_id = pbp_df[keys['espn_id']].iloc[r]
     elif gsis_df.shape[0] != 0:
         if gsis_df.shape[0] <= 1:
             r = 0
+            gsis_id = gsis_df[keys['gsis_id']].iloc[r]
+        elif position in gsis_df['position'].values:
+            row = gsis_df[(gsis_df == position).any(axis=1)]
+            if len(row) >= 1:
+                gsis_id = row['gsis_id'].values[0]
         else:
             r = random.randint(0,gsis_df.shape[0]-1)
-        gsis_id = gsis_df[keys['gsis_id']].iloc[r]
+            gsis_id = gsis_df[keys['gsis_id']].iloc[r]
         pbp_id = None
     else:
         if pbp_df.shape[0] <= 1:
             r = 0
+            pbp_id = pbp_df[keys['espn_id']].iloc[r]
+        elif position in pbp_df['position'].values:
+            row = pbp_df[(pbp_df == position).any(axis=1)]
+            if len(row) >= 1:
+                pbp_id = row['espn_id'].values[0]
         else:
             r = random.randint(0,pbp_df.shape[0]-1)
-        pbp_id = pbp_df[keys['espn_id']].iloc[r]
+            pbp_id = pbp_df[keys['espn_id']].iloc[r]
         gsis_id = None
     
     return (gsis_id, pbp_id)
@@ -304,15 +332,8 @@ def joiner(cat, p_or_t, off_team, id, pos):
             c = " made "
         elif pos == "QB" and "tackle" in cat:
             c = " was on the field for "
-        elif (pos != "QB") and ("pass" in cat or "qb" in cat or cat=="cp") and cat != "qb_hit":
-            if pos in off_pos:
-                c = " was on the field for "
-            else:
-                c = " allowed "
         elif cat == "qb_hit" and pos in off_pos and pos != "QB":
             c = " was on the field for "
-        elif (pos not in off_pos) and (cat in off_categories):
-            c = " allowed "
         elif cat == "temp" or cat == "wind":
             c = " played in an average "
         elif "prob" in cat or cat == "cp" or cat == "cpoe" or cat in av_cats:
@@ -356,7 +377,7 @@ def joiner(cat, p_or_t, off_team, id, pos):
 
 # obtains a player statistic with the given name, year, and category
 # if year is None, obtains career stats
-def player_stat(name, year, category):
+def player_stat(name, year, category, position=None):
     if year is not None and (int(year) < 1999 or int(year) > 2020):
         return None
     if category == None:
@@ -371,7 +392,7 @@ def player_stat(name, year, category):
     names = s_name.split(" ")
     fname = capitalize_name(name)
     s_name = names[0][0] + "." + name.replace(names[0] + " ", "")
-    gsis_id, pbp_id = get_player_id(name, year)
+    gsis_id, pbp_id = get_player_id(name, year, position)
     if gsis_id == None and pbp_id == None:
         if year == None:
             return fname + "has not played in the NFL."
@@ -892,13 +913,14 @@ def mention_parser(tweet):
     player = []
     team = []
     year = []
+    positions = []
     players, first, last = get_players(None)
     tweet = at_tag.sub('', tweet)
     tweet = punctuation.sub('', tweet)
     tweet = tweet.replace("'", "")
     while len(tweet) > 0 and tweet[0] == ' ':
         tweet = tweet[1:]
-    print(tweet)
+    # print(tweet)
     words = tweet.split(",")
     for w in words:
         w = w.lower()
@@ -909,17 +931,23 @@ def mention_parser(tweet):
           defense = False
         if w == "":
             continue
+        if "(" in w and ")" in w:
+            p_pos = w.split("(")
+            pos = p_pos[1].replace(")", "")
+            w = w.replace("(" + pos + ")", "")
+        else:
+            pos = None
         while w[0] == ' ':
             w = w[1:]
         while w[-1] == ' ' or w[-1]==".":
             w = w[:-1]
-        print(w)
+        # print(w)
         c = "default"
         if w[-1] == 's':
             c = w[:-1]
         cat1 = convert_category(w)
         cat2 = convert_category(c)
-        print("categories", cat1, cat2)
+        # print("categories", cat1, cat2)
         if cat1 in categories and cat1 not in category:
             if defense:
               category.append(cat1+"_allowed")
@@ -936,18 +964,20 @@ def mention_parser(tweet):
             team.append(w)
         elif w in players and w not in player:
             player.append(w)
+            positions.append(pos)
         else:
             print("ERROR: Invalid parameter, skipping")
             continue
     if player == []:
         player = [None]
+        positions=[None]
     if team == []:
         team = [None]
     if category == []:
         category = [None]
     if year == []:
         year = [None]
-    return (player, team, year, category)
+    return (player, team, year, category, positions)    
 
 # helper function to find the unique values in a column of the play by play data
 def unique_finder(cat):

@@ -111,10 +111,10 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 # print(get_player_id("lamar jackson", 2020, None))
 # print(get_player_id("lamar jackson", 2020, None))
 # print(get_player_id("lamar jackson", 2020, None))
-# print(get_player_id("lamar jackson", 2020, None))
+# print(get_player_id("lamar jackson", 2020, "wr"))
 # print(get_player_id("lamar jackson", 2020, None))
 # print(get_player_id("tom brady", 2004, None))
-# text = "@nfl_statsbot josh allen (qb), lamar jackson, ravens, epa/play, 2020"
+# text = "@nfl_statsbot lamar jackson (qb), lamar jackson (db), lamar jackson (wr), lamar jackson (qb), josh allen, josh allen (de), epa/play, 2020"
 # msg = ""
 # play, team, year, cat, positions = mention_parser(text)
 # print("Parameters: ", str(play), str(team), str(year), str(cat), str(positions))
@@ -125,6 +125,7 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 # elif team == [None] and cat == [None]:
 #     msg = "That request was invalid! Make sure to use a valid category: https://github.com/rbhushans/nfl-statsbot/blob/master/data/cat_format.csv"
 # else:
+#     i = 0
 #     for p in play:
 #         if p == None:
 #             break
@@ -136,7 +137,9 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 #                 c = c.replace("_allowed", "")
 #             for y in year:
 #                 try:
-#                     stat = player_stat(p, y, c, positions[play.index(p)])
+#                     print("Calling stat with", p, y, c, positions[i])
+#                     stat = player_stat(p, y, c, positions[i])
+#                     i += 1
 #                 except Exception as e:
 #                     print("Err 2:", e)
 #                 if stat == None:

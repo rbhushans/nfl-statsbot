@@ -112,7 +112,7 @@ def get_player_id(name, year, position=None):
             r = 0
             gsis_id = gsis_df[keys['gsis_id']].iloc[r]
             pbp_id = gsis_df[keys['espn_id']].iloc[r]
-        elif position == None:
+        elif position == None or (position not in gsis_df['position'].values and position not in pbp_df['position'].values):
             r = random.randint(0,min(gsis_df.shape[0], pbp_df.shape[0])-1)
             gsis_id = gsis_df[keys['gsis_id']].iloc[r]
             pbp_id = gsis_df[keys['espn_id']].iloc[r]
@@ -963,6 +963,9 @@ def mention_parser(tweet):
         elif w in teams.values and w not in team:
             team.append(w)
         elif w in players and w not in player:
+            player.append(w)
+            positions.append(pos)
+        elif w in players and w in player and pos != None and pos not in positions:
             player.append(w)
             positions.append(pos)
         else:

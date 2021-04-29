@@ -56,6 +56,7 @@ def check_mentions(api, since_id):
         elif team == [None] and cat == [None]:
             msg = "That request was invalid! Make sure to use a valid category: https://github.com/rbhushans/nfl-statsbot/blob/master/data/cat_format.csv"
         else:
+            i = 0
             for p in play:
                 if p == None:
                     break
@@ -67,7 +68,8 @@ def check_mentions(api, since_id):
                         c = c.replace("_allowed", "")
                     for y in year:
                         try:
-                            stat = utils.player_stat(p, y, c, positions[play.index(p)])
+                            stat = utils.player_stat(p, y, c, positions[i])
+                            i += 1
                         except:
                             post_error(api, tweet)
                             return new_since_id

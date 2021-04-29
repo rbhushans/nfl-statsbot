@@ -41,12 +41,10 @@ The Twitter bot currently has three points of main functionality:
     When major NFL accounts send a tweet including a player name or team name, the bot will reply to it with a random statistic pertaining to that player or team (if multiple players or teams are present in the tweet only one will be chosen at random).
 
 ## Caveats
-* For defensive players, the bot currently says "allowed" for offense-only statistics. Additionally, it is important to note that these offensive statistics are only counted when the defensive player had some influence on the play (tackle, assist tackle, QB hit, etc.). 
 * For a player that never played a game in the NFL (but was on a team in some capacity at some point), the bot will state they never played in the NFL
 * Some categories were only introduced in recent years, and as a result will display as 0 for these older statistics.
 * Full career stats will take some time to load.
 * For defensive team stats, adding "allowed" to the end of any stat will obtain the defensive statistic (e.g. if the goal is to obtain the number of passing yards the ravens defense allowed in 2020, the parameters of the tweet would include: ravens, 2020, passing yards allowed)
-* If multiple players with the same name have existed in the NFL, the bot will randomly choose one (See Future Functionality to see intended fixes for this)
 
 ## Future Functionality
 * Multiple Players/Teams Graphs - Include a data visualization comparing multiple players in both the random tweets and statistic requests.

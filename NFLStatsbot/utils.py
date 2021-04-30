@@ -667,7 +667,7 @@ def team_stat(name, pos, year, category):
       abbrev_name = act_name
     
     team_cats_o = ["passing_yards", "rushing_yards", "touchdown", "epa"]
-    team_cats_d = ["forced_fumble_player_1_team", "interception", "sack", "solo_tackle", "epa"]
+    team_cats_d = ["fumble_forced", "interception", "sack", "solo_tackle", "epa"]
     if year == None:
         if category == None:
             df_o = pd.DataFrame()
@@ -681,7 +681,7 @@ def team_stat(name, pos, year, category):
                 data_d = data[['defteam'] + team_cats_d]
                 data_d = data_d[data_d.eq(abbrev_name).any(1)]
                 df_o = df_o.append(data_o)
-                df_d = df_o.append(data_d)
+                df_d = df_d.append(data_d)
             stats_o = {}
             stats_d = {}
             for i in team_cats_o:
@@ -707,7 +707,7 @@ def team_stat(name, pos, year, category):
                       f_c = format_cat(s, False).title()
                 msg += "\n" + f_c + ": " + str(stats_o[s])
             for s in stats_d.keys():
-                if s == "forced_fumble_player_1_team":
+                if s == "fumble_forced":
                     f_c = "Forced Fumbles"
                 elif s == "epa/play":
                     f_c = "Defense EPA/Play"

@@ -6,6 +6,10 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 # print(team_stat("cowboys", False, 2006, "touchdown"))
 
 # print(team_stat("bears", True, None, "xyac_epa"))
+# print(team_stat("patriots", True, None, None))
+# print(team_stat("patriots", False, None, None))
+# print(team_stat("patriots", True, None, "fumble"))
+# print(team_stat("patriots", False, None, "fumble"))
 # print(team_stat("bears", True, 2020, None))
 # print(team_stat("ravens", True, 2020, None)) 
 # print(team_stat("bears", False, 2020, None))
@@ -114,7 +118,7 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 # print(get_player_id("lamar jackson", 2020, "wr"))
 # print(get_player_id("lamar jackson", 2020, None))
 # print(get_player_id("tom brady", 2004, None))
-# text = "@nfl_statsbot lamar jackson (qb), lamar jackson (db), lamar jackson (wr), lamar jackson (qb), josh allen, josh allen (de), epa/play, 2020"
+# text = "@nfl_statsbot lamar jackson (QB), lamar jackson (DB), lamar jackson (wr), lamar jackson (qb), josh allen, josh allen (de), epa/play, 2020"
 # msg = ""
 # play, team, year, cat, positions = mention_parser(text)
 # print("Parameters: ", str(play), str(team), str(year), str(cat), str(positions))

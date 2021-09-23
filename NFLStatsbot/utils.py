@@ -421,7 +421,7 @@ def player_stat(name, year, category, position=None):
         df = pd.DataFrame()
         for y in years:
             data = nflfastpy.load_pbp_data(year=int(y))
-            data = data[data['week']<=(18 if y>= 2021 else 17)]
+            data = data[data['week']<=(18 if int(y) >= 2021 else 17)]
 
             if cat == "fg_prob":
                 data = data[player_categories + [cat, "field_goal_attempt"]]
@@ -466,7 +466,7 @@ def player_stat(name, year, category, position=None):
             return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos) + " in his career."
     else:
         data = nflfastpy.load_pbp_data(year=int(year))
-        data = data[data['week']<=(18 if year>= 2021 else 17)]
+        data = data[data['week']<=(18 if int(year) >= 2021 else 17)]
 
         if cat == "fg_prob":
             df = data[player_categories + [cat, "field_goal_attempt"]]
@@ -678,7 +678,7 @@ def team_stat(name, pos, year, category):
             df_d = pd.DataFrame()
             for y in years:
                 data = nflfastpy.load_pbp_data(year=int(y))
-                data = data[data['week']<=(18 if y>= 2021 else 17)]
+                data = data[data['week']<=(18 if int(y) >= 2021 else 17)]
                 data = data.applymap(lambda s:s.lower() if type(s) == str else s)
                 data_o = data[['posteam'] + team_cats_o]
                 data_o = data_o[data_o.eq(abbrev_name).any(1)]
@@ -730,7 +730,7 @@ def team_stat(name, pos, year, category):
                 return None
             for y in years:
                 data = nflfastpy.load_pbp_data(year=int(y))
-                data = data[data['week']<=(18 if y>= 2021 else 17)]
+                data = data[data['week']<=(18 if int(y) >= 2021 else 17)]
 
                 if_fg = []
                 if "/play" in cat:
@@ -780,7 +780,7 @@ def team_stat(name, pos, year, category):
                 return "The " + fname + c + str(stat_sum) + " " + format_cat(cat, False, f_cat_pos) + " since 1999."
     else:
         data = nflfastpy.load_pbp_data(year=int(year))
-        data = data[data['week']<=(18 if year>= 2021 else 17)]
+        data = data[data['week']<=(18 if int(year) >= 2021 else 17)]
         if category == None:
             data = data.applymap(lambda s:s.lower() if type(s) == str else s)
             df_o = data[['posteam'] + team_cats_o]

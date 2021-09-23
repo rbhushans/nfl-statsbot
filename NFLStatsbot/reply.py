@@ -36,6 +36,8 @@ class MyStreamListener(tweepy.StreamListener):
             return
         if str(tweet.user.id) not in users:
             return
+        if "die" in tweet.text.lower() or "death" in tweet.text.lower() or "dead" in tweet.text.lower() or "injury" in tweet.text.lower():
+            return
         print(f"{tweet.user.name}:{tweet.text}")
         p, t = utils.tweet_parser(tweet.text)
 

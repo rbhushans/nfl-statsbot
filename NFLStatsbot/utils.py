@@ -325,8 +325,9 @@ def underline(string):
     return underlined
 
 # helper function for formatting joining a player/team name with the statistic
-def joiner(cat, p_or_t, off_team, id, pos):
+def joiner(cat, p_or_t, off_team, id, pos, year=None):
     av_cats = ["ydstogo", "yards_gained"]
+    cur_season = year == 2021
     if p_or_t == "player":
         if cat == "extra_point_result" or cat == "field_goal_result":
             c = " made "
@@ -337,7 +338,7 @@ def joiner(cat, p_or_t, off_team, id, pos):
         elif cat == "temp" or cat == "wind":
             c = " played in an average "
         elif "prob" in cat or cat == "cp" or cat == "cpoe" or cat in av_cats:
-            c = " had an average of "
+            c = " has an average of " if cur_season else " had an average of "
         elif ("tackle" in cat or "sack" in cat or (cat == "qb_hit" and pos=="QB")) and pos in off_pos:
             fcat = format_cat(cat, True)
             if "tackle" in cat:
@@ -347,30 +348,33 @@ def joiner(cat, p_or_t, off_team, id, pos):
             elif cat == "qb_hit":
                 fcat = "hit"
             c = " was " + fcat + " "
-        elif is_active(id[0], id[1]) and off_team:
+        elif (is_active(id[0], id[1]) and off_team) or cur_season:
             c = " has "
         else:
             c = " had "
     else:
         if cat == "extra_point_result" or cat == "field_goal_result":
-            c = " made "
+            c = " has made the " if cur_season else " made "
         elif off_team == False and cat in av_cats:
-            c = " defense allowed an average "
+            c = " defense has allowed an average " if cur_season else " defense allowed an average "
         elif cat == "temp" or cat == "wind":
             c = " played in average "
         elif "prob" in cat or cat == "cp" or cat == "cpoe" or cat in av_cats:
-            c = " had an average "
+            c = " has an average " if cur_season else " had an average "
         elif off_team == False and cat in off_categories:
-            c = " defense allowed "
+            c = " defense has allowed" if cur_season else " defense allowed "
         elif off_team == False and cat not in off_categories:
-            c = " defense had "
+            c = " defense has " if cur_season else " defense had "
         elif ("tackle" in cat or "sack" in cat) and off_team == True:
             fcat = format_cat(cat, True)
             if "tackle" in cat:
                 fcat = fcat.replace("tackle", "tackled")
             elif "sack" in fcat:
                 fcat = fcat.replace("sack", "sacked")
-            c = " were " + fcat + " "
+            connector =  " have been " if cur_season else " were "
+            c = connector + fcat + " "
+        elif cur_season: 
+            c = " has "
         else:
             c = " had "
     return c
@@ -378,7 +382,7 @@ def joiner(cat, p_or_t, off_team, id, pos):
 # obtains a player statistic with the given name, year, and category
 # if year is None, obtains career stats
 def player_stat(name, year, category, position=None):
-    if year is not None and (int(year) < 1999 or int(year) > 2020):
+    if year is not None and (int(year) < 1999 or int(year) > 2021):
         return None
     if category == None:
         return None
@@ -417,7 +421,7 @@ def player_stat(name, year, category, position=None):
         df = pd.DataFrame()
         for y in years:
             data = nflfastpy.load_pbp_data(year=int(y))
-            data = data[data['week']<=17]
+            data = data[data['week']<=(18 if y>= 2021 else 17)]
 
             if cat == "fg_prob":
                 data = data[player_categories + [cat, "field_goal_attempt"]]
@@ -445,7 +449,7 @@ def player_stat(name, year, category, position=None):
             data = data.applymap(lambda s:s.lower() if type(s) == str else s)
             data = data[data.eq(gsis_id).any(1)]
             df = df.append(data)
-        c = joiner(cat, "player", True, (gsis_id, pbp_id), pos)
+        c = joiner(cat, "player", True, (gsis_id, pbp_id), pos, year)
         if pos == None:
             f_pos = ""
         else:
@@ -462,7 +466,7 @@ def player_stat(name, year, category, position=None):
             return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos) + " in his career."
     else:
         data = nflfastpy.load_pbp_data(year=int(year))
-        data = data[data['week']<=17]
+        data = data[data['week']<=(18 if year>= 2021 else 17)]
 
         if cat == "fg_prob":
             df = data[player_categories + [cat, "field_goal_attempt"]]
@@ -490,7 +494,7 @@ def player_stat(name, year, category, position=None):
         df = df.applymap(lambda s:s.lower() if type(s) == str else s)
         df = df[df.eq(gsis_id).any(1)]
         zero_cats = ["reception", "receiving_yards", "cmp_pct", "tot_yards"]
-        c = joiner(cat, "player", False, (gsis_id, pbp_id), pos)
+        c = joiner(cat, "player", False, (gsis_id, pbp_id), pos, year)
         if(len(df.index) == 0):
             df = data[master_player_categories]
             df = df.applymap(lambda s:s.lower() if type(s) == str else s)
@@ -642,7 +646,7 @@ def get_stat(df, cat, pos="DEFAULT", player=""):
 # obtains a team statistic from the given name, defense or offense, year, and category
 # pos - True if on offense (has possession)
 def team_stat(name, pos, year, category):
-    if year is not None and (int(year) < 1999 or int(year) > 2020):
+    if year is not None and (int(year) < 1999 or int(year) > 2021):
         return None
     act_name = convert_team(name, "abbrev")
     if act_name == "oak" or act_name == "lv":
@@ -674,7 +678,7 @@ def team_stat(name, pos, year, category):
             df_d = pd.DataFrame()
             for y in years:
                 data = nflfastpy.load_pbp_data(year=int(y))
-                data = data[data['week']<=17]
+                data = data[data['week']<=(18 if y>= 2021 else 17)]
                 data = data.applymap(lambda s:s.lower() if type(s) == str else s)
                 data_o = data[['posteam'] + team_cats_o]
                 data_o = data_o[data_o.eq(abbrev_name).any(1)]
@@ -726,7 +730,7 @@ def team_stat(name, pos, year, category):
                 return None
             for y in years:
                 data = nflfastpy.load_pbp_data(year=int(y))
-                data = data[data['week']<=17]
+                data = data[data['week']<=(18 if y>= 2021 else 17)]
 
                 if_fg = []
                 if "/play" in cat:
@@ -769,14 +773,14 @@ def team_stat(name, pos, year, category):
             else:
                 f_cat_pos = "DEFAULT"
 
-            c = joiner(cat, "team", pos, name, "")
+            c = joiner(cat, "team", pos, name, "", year)
             if stat_sum == 1:
                 return "The " + fname + c + str(stat_sum) + " " + format_cat(cat, True, f_cat_pos) + " since 1999."
             else:
                 return "The " + fname + c + str(stat_sum) + " " + format_cat(cat, False, f_cat_pos) + " since 1999."
     else:
         data = nflfastpy.load_pbp_data(year=int(year))
-        data = data[data['week']<=17]
+        data = data[data['week']<=(18 if year>= 2021 else 17)]
         if category == None:
             data = data.applymap(lambda s:s.lower() if type(s) == str else s)
             df_o = data[['posteam'] + team_cats_o]
@@ -863,7 +867,7 @@ def team_stat(name, pos, year, category):
             else:
                 f_cat_pos = "DEFAULT"
 
-            c = joiner(cat, "team", pos, name, "")
+            c = joiner(cat, "team", pos, name, "", year)
 
             if stat_sum == 1:
                 return "The " + fname + c + str(stat_sum) + " " + format_cat(cat, True, f_cat_pos) + " in " + str(year) + "."

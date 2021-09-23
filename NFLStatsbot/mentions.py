@@ -51,10 +51,12 @@ def check_mentions(api, since_id):
         print("Parameters: ", str(play), str(team), str(year), str(cat), str(positions))
         err = False
 
-        if play == [None] and team == [None]:
+        if play == [None] and team == [None] and cat == [None]:
             post_error(api, tweet)
         elif team == [None] and cat == [None]:
             msg = "That request was invalid! Make sure to use a valid category: https://github.com/rbhushans/nfl-statsbot/blob/master/data/cat_format.csv"
+        elif team == [None] and play == [None]:
+            msg = "I don't recognize that player or team! Make sure that you are spelling the name correctly."
         else:
             i = 0
             for p in play:

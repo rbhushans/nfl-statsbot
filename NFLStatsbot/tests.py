@@ -1,4 +1,4 @@
-from utils import random_stat, team_stat, player_stat, mention_parser, get_players, get_player_id
+from utils import random_stat, team_stat, player_stat, mention_parser, get_players, get_player_id, is_active
 
 # print(team_stat("bears", True, 2006, "touchdown")) # had 44
 # print(team_stat("bears", False, 2006, "touchdown")) # allowed 32
@@ -176,3 +176,11 @@ from utils import random_stat, team_stat, player_stat, mention_parser, get_playe
 #                     break
 #                 msg += m
 # print(msg)
+# print(mention_parser("@nfl_statsbot Stephon Gillmore, Interceptions, 2019"))
+
+# print(get_player_id("Jayson Oweh", 2021))
+# print(is_active('00-0036940', None))
+# print(player_stat("jayson oweh", 2020, "sack"))
+print(player_stat("jayson oweh", 2021, "sack"))
+print(player_stat("rondale moore", 2021, "receiving yards"))
+# print(player_stat("jayson oweh", None, "sack"))

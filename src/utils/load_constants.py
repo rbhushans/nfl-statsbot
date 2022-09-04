@@ -22,5 +22,5 @@ off_pos = ["QB", "RB", "WR", "TE", "T", "OG", "OT", "G", "FB", "C", "LS", "P", "
 full_roster_columns = ['player_name', 'position', 'first_name', 'last_name', 'player_id', 'depth_chart_position']
 
 print("[LOAD_CONSTANTS]: Caching pbp data")
-# nfl.cache_pbp(years_int_list)
+nfl.cache_pbp(years_int_list)
 print("[LOAD_CONSTANTS]: Done caching pbp data")

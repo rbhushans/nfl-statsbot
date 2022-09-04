@@ -14,8 +14,6 @@ sys.path.append('src/utils')
 from parsers import mention_parser
 from stats import player_stat, team_stat, random_stat
 
-os.environ["SINCE_ID"] = '1566239861538824192'
-
 import os
 import sentry_sdk
 sentry_sdk.init(os.environ['SENTRY_DSN'])

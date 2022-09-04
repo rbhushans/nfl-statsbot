@@ -54,6 +54,8 @@ if __name__ == "__main__":
     if (minute < 10) or (minute > 20 and minute < 30) or (minute > 40 and minute < 50):
         fl = False
     if fl:
+        print("skipping this time")
         exit()
     else:
+        print("tweeting!!")
         main()

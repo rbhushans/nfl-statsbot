@@ -1283,3 +1283,26 @@ config.py | 09/03/22 - 19:47:26 | DEBUG | Received keep-alive signal
 config.py | 09/03/22 - 19:48:59 | DEBUG | Received keep-alive signal
 config.py | 09/03/22 - 19:49:20 | DEBUG | Received keep-alive signal
 config.py | 09/03/22 - 19:49:41 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:50:38 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:51:23 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:52:11 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:53:14 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:53:39 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 19:54:53 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 20:20:01 | ERROR | Stream connection has errored or timed out
+config.py | 09/03/22 - 20:20:01 | DEBUG | Signing request <PreparedRequest [POST]> using client <Client client_key=WVqENKWlkkbh6nq0nbDsxeYOO, client_secret=****, resource_owner_key=1373049656318431232-76jl2CYFCxfA0Puj98Lee7dibOD62y, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=utf-8, nonce=None, timestamp=None>
+config.py | 09/03/22 - 20:20:01 | DEBUG | Including body in call to sign: True
+config.py | 09/03/22 - 20:20:01 | DEBUG | Collected params: [('oauth_nonce', '4311261750490540591662261601'), ('oauth_timestamp', '1662261601'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'WVqENKWlkkbh6nq0nbDsxeYOO'), ('oauth_token', '1373049656318431232-76jl2CYFCxfA0Puj98Lee7dibOD62y'), ('follow', '16403943,51263592,19426551,933170624,1312367672,581971753,157157264,36089053,35890043,58919137'), ('stall_warnings', 'True')]
+config.py | 09/03/22 - 20:20:01 | DEBUG | Normalized params: follow=16403943%2C51263592%2C19426551%2C933170624%2C1312367672%2C581971753%2C157157264%2C36089053%2C35890043%2C58919137&oauth_consumer_key=WVqENKWlkkbh6nq0nbDsxeYOO&oauth_nonce=4311261750490540591662261601&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1662261601&oauth_token=1373049656318431232-76jl2CYFCxfA0Puj98Lee7dibOD62y&oauth_version=1.0&stall_warnings=True
+config.py | 09/03/22 - 20:20:01 | DEBUG | Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+config.py | 09/03/22 - 20:20:01 | DEBUG | Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&follow%3D16403943%252C51263592%252C19426551%252C933170624%252C1312367672%252C581971753%252C157157264%252C36089053%252C35890043%252C58919137%26oauth_consumer_key%3DWVqENKWlkkbh6nq0nbDsxeYOO%26oauth_nonce%3D4311261750490540591662261601%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1662261601%26oauth_token%3D1373049656318431232-76jl2CYFCxfA0Puj98Lee7dibOD62y%26oauth_version%3D1.0%26stall_warnings%3DTrue
+config.py | 09/03/22 - 20:20:01 | DEBUG | Signature: +y7zKMAGKjdjwU43o7znpScAVNA=
+config.py | 09/03/22 - 20:20:01 | DEBUG | Encoding URI, headers and body to utf-8.
+config.py | 09/03/22 - 20:20:01 | DEBUG | Updated url: https://stream.twitter.com/1.1/statuses/filter.json
+config.py | 09/03/22 - 20:20:01 | DEBUG | Updated headers: {b'User-Agent': b'Python/3.9.2 Requests/2.28.1 Tweepy/4.10.1', b'Accept-Encoding': b'gzip, deflate', b'Accept': b'*/*', b'Connection': b'keep-alive', b'Content-Type': b'application/x-www-form-urlencoded', b'Cookie': b'guest_id=v1%3A166225763225909868; guest_id_ads=v1%3A166225763225909868; guest_id_marketing=v1%3A166225763225909868; personalization_id="v1_zUcOo+VKDU+6SqTcIqy48A=="', b'Content-Length': b'139', b'Authorization': b'OAuth oauth_nonce="4311261750490540591662261601", oauth_timestamp="1662261601", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="WVqENKWlkkbh6nq0nbDsxeYOO", oauth_token="1373049656318431232-76jl2CYFCxfA0Puj98Lee7dibOD62y", oauth_signature="%2By7zKMAGKjdjwU43o7znpScAVNA%3D"'}
+config.py | 09/03/22 - 20:20:01 | DEBUG | Updated body: b'follow=16403943%2C51263592%2C19426551%2C933170624%2C1312367672%2C581971753%2C157157264%2C36089053%2C35890043%2C58919137&stall_warnings=True'
+config.py | 09/03/22 - 20:20:01 | DEBUG | Resetting dropped connection: stream.twitter.com
+config.py | 09/03/22 - 20:20:01 | DEBUG | https://stream.twitter.com:443 "POST /1.1/statuses/filter.json HTTP/1.1" 200 None
+config.py | 09/03/22 - 20:20:01 | INFO | Stream connected
+config.py | 09/03/22 - 20:20:35 | DEBUG | Received keep-alive signal
+config.py | 09/03/22 - 20:21:32 | DEBUG | Received keep-alive signal

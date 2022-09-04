@@ -1,0 +1,28 @@
+TODO:
+
+- Make new account - DONE
+- Apply for twitter developer account - DONE
+- Code up bot
+- Release bot
+- Create history category with draft_year, draft_club, college, current team, draft_number
+
+Functionality:
+
+- Respond to major accounts with random nfl player stat (maybe by reading the tweet to see who is being mentioned)
+- Tweet a stat hourly
+- When someone @'s the bot use the following cases: - Default: reply with random stat - Player Name: reply with career stats - Player Name + Year: Reply with season stats - Team Name + Year: Reply with season stats - Team Name + 'Most STAT': Reply with player who had the most of STAT in career - Team Name + 'Most STAT' + Year: Reply with player who had the most of STAT in season
+
+Bot Plan:
+
+- Random Stat:
+
+  - Pick random player
+  - Pick random time range (game, season, or career)
+  - Pick random stat (touchdowns, points, receiving yards, rushing yards, passing yards) based on position
+  - Then Tweet something like: Marlon Humphrey (CB) had 10 forced fumbles in the 20-21 season.
+
+- Specific Stat:
+  - Parse request tweet
+  - If invalid, reply and quote tweet the instructions tweet:
+    That request was invalid! Check the ways to call the bot here. Here's a random stat: ...
+  - If valid, obtain the stat from NFL API and tweet it out

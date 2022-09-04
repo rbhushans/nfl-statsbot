@@ -1,0 +1,131 @@
+category,singular,plural,player_cat
+ydstogo,yard to go,yards to go,NA
+yards_gained,yard gained,yards gained,NA
+shotgun,shotgun snap,shotgun snaps,passer_id|passer_player_id
+no_huddle,no huddle,no huddles,passer_id|passer_player_id
+qb_dropback,QB dropback,QB dropbacks,passer_id|passer_player_id
+qb_kneel,QB kneel,QB kneels,passer_id|passer_player_id
+qb_spike,QB spike,QB spikes,passer_id|passer_player_id
+qb_scramble,QB scramble,QB scrambles,NA
+pass_length,deep pass,deep passes,passer_id|passer_player_id
+pass_location,different pass location,different pass locations,passer_id|passer_player_id
+air_yards,air yard,air yards,passer_id|passer_player_id
+yards_after_catch,yard after catch,yards after catch,receiver_id|receiver_player_id
+run_location,different run location,different run locations,rusher_id|rusher_player_id
+run_gap,different run gaps,different run gaps,rusher_id|rusher_player_id
+field_goal_result,field goal,field goals,kicker_player_id
+kick_distance,yard of total kick distance,yards of total kick distance,kicker_player_id
+extra_point_result,extra point,extra points,kicker_player_id
+two_point_conv_result,two point conversion,two point conversions,NA
+no_score_prob,no score probability,no score probability,NA
+opp_fg_prob,opponent field goal probability,opponent field goal probability,NA
+opp_safety_prob,opponent safety probability,opponent safety probability,NA
+opp_td_prob,opponent touchdown probability (touchdowns only),opponent touchdown probability (touchdowns only),NA
+fg_prob,field goal probability,field goal probability,kicker_player_id
+safety_prob,safety probability,safety probability,NA
+td_prob,touchdown probability (touchdowns only),touchdown probability (touchdowns only),NA
+extra_point_prob,extra point probability,extra point probability,kicker_player_id
+two_point_conversion_prob,two point conversion probability,two point conversion probability,NA
+ep,expected point,expected points,NA
+epa,EPA,EPA,NA
+air_epa,air EPA,air EPA,passer_id|passer_player_id
+yac_epa,YAC EPA,YAC EPA,receiver_id|receiver_player_id
+comp_air_epa,air EPA (completions only),air EPA (completions only),passer_id|passer_player_id
+comp_yac_epa,YAC EPA (completions only),YAC EPA (completions only),receiver_id|receiver_player_id
+punt_blocked,blocked punt,blocked punts,punter_player_id
+first_down_rush,first down rush,first down rushes,rusher_id|rusher_player_id
+first_down_pass,first down pass,first down passes,passer_id|passer_player_id|receiver_id|receiver_player_id
+first_down_penalty,first down penalty,first down penalties,NA
+third_down_converted,third down conversion,third down conversions,NA
+third_down_failed,failed third down conversion,failed third down conversions,NA
+fourth_down_converted,fourth down conversion,fourth down conversions,NA
+fourth_down_failed,failed fourth down conversion,failed fourth down conversions,NA
+incomplete_pass,incomplete pass,incomplete passes,passer_id|passer_player_id
+touchback,touchback,touchbacks,kicker_player_id
+interception,interception,interceptions,passer_id|passer_player_id|interception_player_id
+punt_inside_twenty,punt inside the 20 yard line,punts inside the 20 yard line,punter_player_id
+punt_in_endzone,punt in the endzone,punts in the endzone,punter_player_id
+punt_out_of_bounds,punt out of bounds,punts out of bounds,punter_player_id
+punt_downed,punt that was downed,punts that were downed,punter_player_id
+punt_fair_catch,punt that resulted in a fair catch,punts that resulted in a fair catch,punter_player_id
+kickoff_inside_twenty,kickoff inside the 20 yard line,kickoffs inside the 20 yard line,kicker_player_id
+kickoff_in_endzone,kickoff in the endzone,kickoffs in the endzone,kicker_player_id
+kickoff_out_of_bounds,kickoff out of bounds,kickoffs out of bounds,kicker_player_id
+kickoff_downed,kickoff downed,kickoffs downed,kicker_player_id
+kickoff_fair_catch,kickoff that resulted in a fair catch,kickoffs that resulted in a fair catch,kicker_player_id
+fumble_forced,forced fumble,forced fumbles,forced_fumble_player_1_player_id|forced_fumble_player_2_player_id
+fumble_not_forced,fumble that was not forced,fumbles that were not forced,fumbled_1_player_id|fumbled_2_player_id
+fumble_out_of_bounds,fumble out of bounds,fumbles out of bounds,fumbled_1_player_id|fumbled_2_player_id
+solo_tackle,solo tackle,solo tackles,OFF|solo_tackle_1_player_id|solo_tackle_2_player_id
+safety,safety,safeties,NA
+penalty,penalty,penalties,penalty_player_id
+tackled_for_loss,tackle for loss,tackles for loss,OFF|tackle_for_loss_1_player_id|tackle_for_loss_2_player_id
+fumble_lost,lost fumble,lost fumbles,fumbled_1_player_id|fumbled_2_player_id
+own_kickoff_recovery,own kickoff recovery,own kickoff recoveries,NA
+own_kickoff_recovery_td,own kickoff recovery resulting in a touchdown,own kickoff recoveries resulting in a touchdown,NA
+qb_hit,QB hit,QB hits,passer_id|passer_player_id|qb_hit_1_player_id|qb_hit_2_player_id
+rush_attempt,rush attempt,rush attempts,rusher_id|rusher_player_id
+pass_attempt,pass attempt,pass attempts,passer_id|passer_player_id
+sack,sack,sacks,OFF|sack_player_id|half_sack_1_player_id|half_sack_2_player_id
+touchdown,touchdown,touchdowns,OFF|td_player_id
+pass_touchdown,passing touchdown,passing touchdowns,passer_id|passer_player_id
+rush_touchdown,rushing touchdown,rushing touchdowns,rusher_id|rusher_player_id
+return_touchdown,return touchdown,return touchdowns,td_player_id
+extra_point_attempt,extra point attempt,extra point attempts,kicker_player_id
+two_point_attempt,two point attempt,two point attempts,NA
+field_goal_attempt,field goal attempt,field goal attempts,kicker_player_id
+kickoff_attempt,kickoff attempt,kickoff attempts,kicker_player_id
+punt_attempt,punt attempt,punt attempts,punter_player_id
+fumble,fumble,fumbles,fumbled_1_player_id|fumbled_2_player_id
+complete_pass,pass completion,pass completions,passer_id|passer_player_id
+assist_tackle,assist tackle,assist tackles,OFF|assist_tackle_1_player_id|assist_tackle_2_player_id|assist_tackle_3_player_id|assist_tackle_4_player_id
+lateral_reception,lateral reception,lateral receptions,lateral_receiver_player_id
+lateral_rush,lateral rush,lateral rushes,lateral_rusher_player_id
+lateral_return,lateral return,lateral returns,lateral_kickoff_returner_player_id|lateral_punt_returner_player_id
+lateral_recovery,lateral recovery,lateral recoveries,NA
+passing_yards,passing yard,passing yards,passer_id|passer_player_id
+receiving_yards,receiving yard,receiving yards,receiver_id|receiver_player_id
+rushing_yards,rushing yard,rushing yards,rusher_id|rusher_player_id
+lateral_receiving_yards,lateral receving yard,lateral receving yards,lateral_receiver_player_id
+lateral_rushing_yards,lateral rushing yard,lateral rushing yards,lateral_rusher_player_id
+tackle_with_assist,tackle with an assist,tackles with an assist,OFF|tackle_with_assist_1_player_id|tackle_with_assist_2_player_id
+return_yards,return yard,return yards,punt_returner_player_id|kickoff_returner_player_id
+penalty_yards,penalty yard,penalty yards,penalty_player_id
+replay_or_challenge,replay or challenge,replays or challenges,NA
+replay_or_challenge_result,successful replay or challenge,successful replays or challenges,NA
+penalty_type,penalty type,penalty types,penalty_player_id
+defensive_two_point_attempt,defensive two point attempt,defensive two point attempts,NA
+defensive_two_point_conv,defensive two point conversion,defensive two point conversions,NA
+defensive_extra_point_attempt,defensive extra point attempt,defensive extra point attempts,NA
+defensive_extra_point_conv,defensive extra point conversion,defensive extra point conversions,NA
+cp,completion probability,completion probability,passer_id|passer_player_id
+cpoe,CPOE,CPOE,passer_id|passer_player_id
+series_success,successful series,successful series,NA
+special_teams_play,special teams play,special teams plays,NA
+st_play_type,special teams play type,special teams play types,NA
+temp,temperature,temperature,NA
+wind,wind speed,wind speed,NA
+aborted_play,aborted play,aborted plays,NA
+success,success,successes,NA
+pass,pass,passes,passer_id|passer_player_id
+rush,rush,rushes,rusher_id|rusher_player_id
+first_down,first down,first downs,NA
+play,play,plays,NA
+out_of_bounds,out of bounds,out of bounds,NA
+qb_epa,QB EPA,QB EPA,passer_id|passer_player_id
+xyac_epa,XYAC EPA,XYAC EPA,receiver_id|receiver_player_id
+xyac_mean_yardage,XYAC mean yardage,XYAC mean yardage,receiver_id|receiver_player_id
+xyac_success,XYAC success probability,XYAC success probability,receiver_id|receiver_player_id
+xyac_fd,XYAC first down probability,XYAC first down probability,receiver_id|receiver_player_id
+xpass,dropback probability,dropback probability,passer_id|passer_player_id
+pass_oe,dropback probability over expected,dropback probability over expected,passer_id|passer_player_id
+reception,reception,receptions,receiver_id|receiver_player_id|passing_yards
+epa/play,EPA/play,EPA/play,NA
+air_epa/play,air EPA/play,air EPA/play,passer_id|passer_player_id
+yac_epa/play,YAC EPA/play,YAC EPA/play,receiver_id|receiver_player_id
+comp_air_epa/play,air EPA/play (completions only),air EPA/play (completions only),passer_id|passer_player_id
+comp_yac_epa/play,YAC EPA/play (completions only),YAC EPA/play (completions only),receiver_id|receiver_player_id
+qb_epa/play,QB EPA/play,QB EPA/play,passer_id|passer_player_id
+xyac_epa/play,XYAC EPA/play,XYAC EPA/play,receiver_id|receiver_player_id
+tot_yards,total yard,total yards,NA
+cmp_pct,completion percentage,completion percentage,passer_id|passer_player_id

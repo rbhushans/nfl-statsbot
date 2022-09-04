@@ -5,17 +5,22 @@ This file contains the logic for the twitter bot to reply to mentions
 import tweepy
 import json
 import requests
-import utils
 from config import create_api
 import time
 import logging
 import os
+import sys
+sys.path.append('src/utils')
+from parsers import mention_parser
+from stats import player_stat, team_stat, random_stat
+
+os.environ["SINCE_ID"] = '1566239861538824192'
 
 import os
-import sentry_sdk
-sentry_sdk.init(os.environ['SENTRY_DSN'])
+# import sentry_sdk
+# sentry_sdk.init(os.environ['SENTRY_DSN'])
 
-logging.basicConfig(filename="bot.log",
+logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
                     format='mentions.py | %(asctime)s | %(levelname)s | %(message)s',
                     datefmt='%D - %H:%M:%S',
@@ -47,11 +52,10 @@ def check_mentions(api, since_id):
         print(f"{tweet.user.name}:{tweet.text}")
         msg = ""
 
-        play, team, year, cat, positions = utils.mention_parser(tweet.text)
+        play, team, year, cat, positions = mention_parser(tweet.text)
         print("Parameters: ", str(play), str(team), str(year), str(cat), str(positions))
         err = False
-        if year == [None]:
-            msg = "NFLStatsbot now requires a year to be provided - please include a year when requesting statistics"
+        
         if play == [None] and team == [None] and cat == [None]:
             post_error(api, tweet)
         elif team == [None] and cat == [None]:
@@ -71,8 +75,10 @@ def check_mentions(api, since_id):
                         c = c.replace("_allowed", "")
                     for y in year:
                         try:
-                            stat = utils.player_stat(p, y, c, positions[i])
+                            stat = player_stat(p, y, c, positions[i])
                             i += 1
+                            if i >= len(positions):
+                                i -= 1
                         except:
                             post_error(api, tweet)
                             return new_since_id
@@ -96,7 +102,7 @@ def check_mentions(api, since_id):
                         off = True
                     for y in year:    
                         try:                    
-                            stat = utils.team_stat(t, off, y, c)
+                            stat = team_stat(t, off, y, c)
                         except:
                             post_error(api, tweet)
                             return new_since_id
@@ -124,9 +130,9 @@ def post_reply(api, msg, tweet):
         print("\tmsg =",msg)
 
 def post_error(api, tweet):
-    stat = utils.random_stat()
+    stat = random_stat()
     while stat == None:
-        stat = utils.random_stat()
+        stat = random_stat()
     msg = "That request was invalid! Check my pinned post for details on how to call the bot. Common issues include not @/ing the bot or not separating the parameters by commas. Here's a random stat: " + stat
     post_reply(api, msg, tweet)
 
@@ -144,8 +150,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-

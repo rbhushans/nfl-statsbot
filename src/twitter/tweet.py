@@ -5,7 +5,9 @@ This file contains the logic for the twitter bot to tweet every 15 minutes
 import tweepy
 import json
 import requests
-from utils import random_stat
+import sys
+sys.path.append('src/utils')
+from stats import random_stat
 from config import create_api
 import time
 import logging
@@ -15,7 +17,7 @@ import os
 import sentry_sdk
 sentry_sdk.init(os.environ['SENTRY_DSN'])
 
-logging.basicConfig(filename="bot.log",
+logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
                     format='tweet.py | %(asctime)s | %(levelname)s | %(message)s',
                     datefmt='%D - %H:%M:%S',
@@ -55,8 +57,3 @@ if __name__ == "__main__":
         exit()
     else:
         main()
-
-
-
-
-

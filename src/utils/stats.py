@@ -67,11 +67,20 @@ def player_stat(name, year, category, position=None):
 
     if player_det == None:
         if year == None:
-            return fname + "(" + position + ") has not played in the NFL."
+            if position == None:
+                return fname + " has not played in the NFL."
+            else:
+                return fname + "(" + position + ") has not played in the NFL."
         else:
             return fname + "did not play in the NFL in " + str(year) + "."
     
-    pos = [player_det['position'], player_det['depth_chart_position']]
+    pos_tuple = [player_det['position'], player_det['depth_chart_position']]
+
+    pos_spec = pos_tuple[1]
+    if pos_spec == None:
+        pos_spec = pos_tuple[0]
+   
+    pos_spec = pos_spec.upper()
 
     if year == None:
         df = pd.DataFrame()
@@ -89,7 +98,7 @@ def player_stat(name, year, category, position=None):
                 data = data[player_categories + [cat.replace("/play", "")]]
             elif cat == "reception":
                 data = data[player_categories + ["passing_yards"]]
-            elif "QB" in pos and "touchdown" in cat:
+            elif "QB" in pos_tuple and "touchdown" in cat:
                 data = data[["interception", "fumble"] + player_categories + [cat]]
             elif cat == "tot_yards":
                 data = data[["passing_yards", "receiving_yards", "rushing_yards"] + player_categories]
@@ -103,20 +112,20 @@ def player_stat(name, year, category, position=None):
                 data = data[player_categories]
 
             data = data.applymap(lambda s:s.lower() if type(s) == str else s)
-            data = data[data.eq(player_det.player_id).any(1)]
+            data = data[data.eq(player_det['player_id']).any(1)]
             df = pd.concat([df, data])
-        c = joiner(cat, "player", True, player_det['player_id'], pos[1], year)
-        f_pos = "(" + pos[1] + ")"
+        c = joiner(cat, "player", True, player_det['player_id'], pos_spec, year)
+        f_pos = "(" + pos_spec + ")"
 
         if(len(df.index) == 0):
-            return fname + f_pos + c + "0 " + format_cat(cat, False, pos=pos[1]) + " in his career."
+            return fname + f_pos + c + "0 " + format_cat(cat, False, pos=pos_spec) + " in his career."
             
-        stat_sum = get_stat(df, cat, pos, player_det['player_id'])
+        stat_sum = get_stat(df, cat, pos_spec, player_det['player_id'])
 
         if stat_sum == 1:
-            return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, True, pos=pos[1]) + " in his career."
+            return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, True, pos=pos_spec) + " in his career."
         else:
-            return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos[1]) + " in his career."
+            return fname + f_pos + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos_spec) + " in his career."
     else:
         data = get_pbp_data(int(year))
         data = data[data['week']<=(18 if int(year) >= 2021 else 17)]
@@ -131,7 +140,7 @@ def player_stat(name, year, category, position=None):
             df = data[player_categories + [cat.replace("/play", "")]]
         elif cat == "reception":
             df = data[player_categories + ["passing_yards"]]
-        elif "QB" in pos and "touchdown" in cat:
+        elif "QB" in pos_tuple and "touchdown" in cat:
             df = data[["interception", "fumble"] + player_categories + [cat]]
         elif cat == "tot_yards":
             df = data[["passing_yards", "receiving_yards", "rushing_yards"] + player_categories]
@@ -147,21 +156,21 @@ def player_stat(name, year, category, position=None):
         df = df.applymap(lambda s:s.lower() if type(s) == str else s)
         df = df[df.eq(player_det['player_id']).any(1)]
         zero_cats = ["reception", "receiving_yards", "cmp_pct", "tot_yards"]
-        c = joiner(cat, "player", False, player_det['player_id'], pos[1], year)
+        c = joiner(cat, "player", False, player_det['player_id'], pos_spec, year)
         if(len(df.index) == 0):
             df = data[master_player_categories]
             df = df.applymap(lambda s:s.lower() if type(s) == str else s)
             df = df[df.eq(player_det['player_id']).any(1)]
             if len(df.index) != 0:
-                return fname + "(" + pos[1] + ")" + c + "0 " + format_cat(cat, False, pos=pos[1]) + " in " + str(year) + "."
-            return fname + "(" + pos[1] + ")" + " did not play in the NFL in " + str(year) + "."
+                return fname + "(" + pos_spec + ")" + c + "0 " + format_cat(cat, False, pos=pos_spec) + " in " + str(year) + "."
+            return fname + "(" + pos_spec + ")" + " did not play in the NFL in " + str(year) + "."
 
-        stat_sum = get_stat(df, cat, pos[1], player_det['player_id'])
+        stat_sum = get_stat(df, cat, pos_spec, player_det['player_id'])
         
         if stat_sum == 1:
-            return fname + "(" + pos[1] + ")" + c + str(stat_sum) + " " + format_cat(cat, True, pos=pos[1]) + " in " + str(year) + "."
+            return fname + "(" + pos_spec + ")" + c + str(stat_sum) + " " + format_cat(cat, True, pos=pos_spec) + " in " + str(year) + "."
         else:
-            return fname + "(" + pos[1] + ")" + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos[1]) + " in " + str(year)  + "."
+            return fname + "(" + pos_spec + ")" + c + str(stat_sum) + " " + format_cat(cat, False, pos=pos_spec) + " in " + str(year)  + "."
     return -1
 
 # helper function to get a statistic from the dataframe

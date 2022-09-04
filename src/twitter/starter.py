@@ -1,7 +1,7 @@
 import subprocess
 from time import sleep
 
-cmd = "python NFLStatsbot/reply.py"
+cmd = "python src/twitter/reply.py"
 
 restart_timer = 2
 def start_script():

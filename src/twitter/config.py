@@ -5,7 +5,7 @@ import logging
 
 #load env
 load_dotenv(override=True)
-logging.basicConfig(filename="bot.log",
+logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
                     format='config.py | %(asctime)s | %(levelname)s | %(message)s',
                     datefmt='%D - %H:%M:%S',
@@ -20,16 +20,11 @@ def create_api():
     access_token = os.getenv("ACCESS_TOKEN")
     access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
 
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth, wait_on_rate_limit=True, 
-        wait_on_rate_limit_notify=True)
-    try:
-        api.verify_credentials()
-    except Exception as e:
-        print("ERROR: Did not configure API")
-        logger.error("Error creating API", exc_info=True)
-        raise e
+    auth = tweepy.OAuth1UserHandler(
+        consumer_key, consumer_secret, access_token, access_token_secret
+    )
+
+    api = tweepy.API(auth)
     print("API Created")
     logger.info("API Created")
     return api

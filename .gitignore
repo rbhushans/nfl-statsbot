@@ -3,7 +3,5 @@ plan.txt
 .DS_Store
 .python-version
 __pycache__/
-bot.log
 .vscode/
 .bot.log.icloud
-*.log

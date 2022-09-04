@@ -3,11 +3,10 @@ This file contains the logic for the twitter bot to reply to mentions
 '''
 
 import tweepy
-import json
-import requests
+import os
 from config import create_api
-import time
 import logging
+from dotenv import load_dotenv
 import numpy as np
 import random
 from urllib3.exceptions import ProtocolError, ReadTimeoutError
@@ -17,7 +16,9 @@ from parsers import tweet_parser
 from stats import player_stat, team_stat
 from load_constants import categories, years
 
+load_dotenv(override=True)
 users = np.genfromtxt("data/users.txt", dtype='str').tolist()
+self_id = "1373049656318431232"
 
 logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
@@ -29,12 +30,8 @@ logging.info("Reply bot running")
 logger = logging.getLogger()
 
 class MyStreamListener(tweepy.Stream):
-    def __init__(self, api):
-        self.api = api
-        self.me = api.me()
-
     def on_status(self, tweet):
-        if tweet.user.id == self.me.id:
+        if tweet.user.id == self_id:
             return
         if hasattr(tweet, 'retweeted_status'):
             return
@@ -92,13 +89,14 @@ class MyStreamListener(tweepy.Stream):
         print("Error detected")
 
 def main():
-    api = create_api()
-    tweets_listener = MyStreamListener(api)
-    stream = tweepy.Stream(api.auth, tweets_listener)
+    consumer_key = os.getenv("API_KEY")
+    consumer_secret = os.getenv("API_KEY_SECRET")
+    access_token = os.getenv("ACCESS_TOKEN")
+    access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
+    stream = MyStreamListener(consumer_key, consumer_secret, access_token, access_token_secret)
     print(users)
     stream.filter(follow=users, stall_warnings=True)
 
-    
 if __name__ == "__main__":
     main()
 

@@ -2,7 +2,7 @@
 
 ## Description
 
-The NFL Statsbot is a Twitter bot [(@nfl_statsbot)](https://twitter.com/nfl_statsbot) used to easily obtain any season or career statistic of any player or team since 1999. The football statistics are generated using play by play data from [NFLFastR](https://github.com/mrcaseb/nflfastR) with wrapper functions from [NFLFastPy](https://github.com/fantasydatapros/nflfastpy). For descriptions/definitions of statistics, the [NFLFastR documentation](https://cran.r-project.org/web/packages/nflfastR/nflfastR.pdf) can be referenced.
+The NFL Statsbot is a Twitter bot [(@nfl_statsbot)](https://twitter.com/nfl_statsbot) used to easily obtain any season or career statistic of any player or team since 1999. The football statistics are generated using play by play data from [NFLFastR](https://github.com/mrcaseb/nflfastR) with wrapper functions from [NFLDataPy](https://pypi.org/project/nfl-data-py/). For descriptions/definitions of statistics, the [NFLFastR documentation](https://cran.r-project.org/web/packages/nflfastR/nflfastR.pdf) can be referenced.
 
 ## Functionality
 

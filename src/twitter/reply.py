@@ -19,6 +19,7 @@ from load_constants import categories, years
 load_dotenv(override=True)
 users = np.genfromtxt("data/users.txt", dtype='str').tolist()
 self_id = "1373049656318431232"
+api = create_api()
 
 logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
@@ -63,7 +64,7 @@ class MyStreamListener(tweepy.Stream):
                 r = random.randint(0, len(years)-1)
                 r_year = years[r]
                 msg = team_stat(t[0], True, r_year, r_category)
-            print("Reply Parameters: " + t[0] + r_year + r_category)
+            print("Reply Parameters:", t[0], r_year, r_category)
         else:
             msg = player_stat(p[0], r_year, r_category)
             while msg == None or "did not play" in msg:
@@ -72,17 +73,19 @@ class MyStreamListener(tweepy.Stream):
                 r = random.randint(0, len(years)-1)
                 r_year = years[r]
                 msg = player_stat(p[0], r_year, r_category)
-            print("Reply Parameters: " + p[0] + r_year + r_category)
+            print("Reply Parameters:", p[0], r_year, r_category)
         
         print(f"Replying to {tweet.user.name} with {msg}")
         
         try:
-            self.api.update_status(
+            api.update_status(
                 status=msg,
                 in_reply_to_status_id=tweet.id,
                 auto_populate_reply_metadata=True
             )
-        except:
+            print("Tweet sent successfully")
+        except Exception as e:
+            print("Error with Tweet:", e)
             return
 
     def on_error(self, status):

@@ -25,7 +25,7 @@ def get_pbp_data(year):
     try:
         data = nfl.import_pbp_data([int(year)], cache=True)
     except:
-        nfl.cache_pbp(years_int_list)
+        data = nfl.import_pbp_data([int(year)], cache=False)
     enablePrint()
     return data
 
@@ -35,7 +35,9 @@ def get_full_pbp_data():
     try:
         data = nfl.import_pbp_data(years_int_list, cache=True)
     except:
+        data = nfl.import_pbp_data(years_int_list, cache=False)
         nfl.cache_pbp(years_int_list)
+
     enablePrint()
     return data
 

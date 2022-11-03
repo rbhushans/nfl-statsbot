@@ -22,14 +22,20 @@ def get_full_roster(columns):
 
 def get_pbp_data(year):
     blockPrint()
-    data = nfl.import_pbp_data([int(year)], cache=True)
+    try:
+        data = nfl.import_pbp_data([int(year)], cache=True)
+    except:
+        nfl.cache_pbp(years_int_list)
     enablePrint()
     return data
 
 # loads play by play data for all years
 def get_full_pbp_data():
     blockPrint()
-    data = nfl.import_pbp_data(years_int_list, cache=True)
+    try:
+        data = nfl.import_pbp_data(years_int_list, cache=True)
+    except:
+        nfl.cache_pbp(years_int_list)
     enablePrint()
     return data
 

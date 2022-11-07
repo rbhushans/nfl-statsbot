@@ -29,7 +29,7 @@ logger = logging.getLogger()
 
 def check_mentions(api, since_id):
     new_since_id = since_id
-    # print(since_id)
+    print(since_id)
     
     for tweet in tweepy.Cursor(api.mentions_timeline, since_id=since_id).items():
         if not tweet.favorited:
@@ -124,7 +124,7 @@ def post_reply(api, msg, tweet):
             auto_populate_reply_metadata=True
         )
     except Exception as e:
-        print("Error replying:", e)
+        print("Error replying to", tweet, "with error:", e)
         print("\tmsg =",msg)
 
 def post_error(api, tweet):

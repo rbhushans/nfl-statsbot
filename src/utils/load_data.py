@@ -21,25 +21,27 @@ def get_full_roster(columns):
     return data
 
 def get_pbp_data(year):
-    blockPrint()
+    # blockPrint()
     try:
         data = nfl.import_pbp_data([int(year)], cache=True)
     except:
         data = nfl.import_pbp_data([int(year)], cache=False)
+        print("Caching pbp data for ", year)
         nfl.cache_pbp([int(year)])
-    enablePrint()
+    # enablePrint()
     return data
 
 # loads play by play data for all years
 def get_full_pbp_data():
-    blockPrint()
+    # blockPrint()
     try:
         data = nfl.import_pbp_data(years_int_list, cache=True)
     except:
         data = nfl.import_pbp_data(years_int_list, cache=False)
+        print("Caching pbp data for ", years_int_list)
         nfl.cache_pbp(years_int_list)
 
-    enablePrint()
+    # enablePrint()
     return data
 
 def get_player_cats(cat):

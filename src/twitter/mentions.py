@@ -15,8 +15,8 @@ from parsers import mention_parser
 from stats import player_stat, team_stat, random_stat
 
 import os
-import sentry_sdk
-sentry_sdk.init(os.environ['SENTRY_DSN'])
+# import sentry_sdk
+# sentry_sdk.init(os.environ['SENTRY_DSN'])
 
 logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
@@ -113,7 +113,7 @@ def check_mentions(api, since_id):
 
         print(f"Answering to {tweet.user.name} with {msg}")
         post_reply(api, msg, tweet)
-    os.environ["SINCE_ID"] = str(new_since_id)
+    # os.environ["SINCE_ID"] = str(new_since_id)
     return new_since_id
 
 def post_reply(api, msg, tweet):
@@ -123,6 +123,7 @@ def post_reply(api, msg, tweet):
             in_reply_to_status_id=tweet.id,
             auto_populate_reply_metadata=True
         )
+        print("Replied with", msg, "to", tweet.id)
     except Exception as e:
         print("Error replying to", tweet, "with error:", e)
         print("\tmsg =",msg)
@@ -136,7 +137,7 @@ def post_error(api, tweet):
 
 def main():
     api = create_api()
-    since_id = int(os.getenv("SINCE_ID"))
+    since_id = 1588058674500579328 #int(os.getenv("SINCE_ID"))
     while True:
         try:
             since_id = check_mentions(api, since_id)

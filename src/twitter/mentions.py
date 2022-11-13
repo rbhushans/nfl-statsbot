@@ -15,8 +15,8 @@ from parsers import mention_parser
 from stats import player_stat, team_stat, random_stat
 
 import os
-# import sentry_sdk
-# sentry_sdk.init(os.environ['SENTRY_DSN'])
+import sentry_sdk
+sentry_sdk.init(os.environ['SENTRY_DSN'])
 
 logging.basicConfig(filename="logs/bot.log",
                     filemode='a',
@@ -113,7 +113,7 @@ def check_mentions(api, since_id):
 
         print(f"Answering to {tweet.user.name} with {msg}")
         post_reply(api, msg, tweet)
-    # os.environ["SINCE_ID"] = str(new_since_id)
+    os.environ["SINCE_ID"] = str(new_since_id)
     return new_since_id
 
 def post_reply(api, msg, tweet):

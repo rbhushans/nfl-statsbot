@@ -22,8 +22,8 @@ stat_set = set()
 off_pos = ["QB", "RB", "WR", "TE", "T", "OG", "OT", "G", "FB", "C", "LS", "P", "K"]
 full_roster_columns = ['player_name', 'position', 'first_name', 'last_name', 'player_id', 'depth_chart_position']
 
-print("[LOAD_CONSTANTS]: Caching pbp data")
-today_date = datetime.datetime.today().weekday()
-if today_date == 1:
-    nfl.cache_pbp(years_int_list)
-print("[LOAD_CONSTANTS]: Done caching pbp data")
+# print("[LOAD_CONSTANTS]: Caching pbp data")
+# today_date = datetime.datetime.today().weekday()
+# if today_date == 1:
+#     nfl.cache_pbp(years_int_list)
+# print("[LOAD_CONSTANTS]: Done caching pbp data")

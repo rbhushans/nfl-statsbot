@@ -39,7 +39,7 @@ class MyStreamListener(tweepy.Stream):
         if str(tweet.user.id) not in users:
             return
         ttt = tweet.text.lower()
-        checks_bad = ["pray", "terrible", "die", "condolence", "death", "dead", "kill", "acl", "injur", "dead", "out for the season", "rip", "passed away", "pass away"]
+        checks_bad = ["pray", "terrible", "die", "condolence", "death", "dead", "kill", "acl", "injur", "dead", "out for the season", "rip", "passed away", "pass away", "damar hamlin", "cardiac arrest"]
         for c in checks_bad:
             if c in ttt:
                 return

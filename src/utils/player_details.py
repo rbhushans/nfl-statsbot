@@ -1,5 +1,5 @@
 from load_data import get_roster_year, get_full_roster
-from load_constants import current_year, full_roster_columns
+from load_constants import current_year, full_roster_columns, current_year
 import pandas as pd
 import random
 

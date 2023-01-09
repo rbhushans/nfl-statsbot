@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 import numpy as np
-from load_constants import categories, years, stat_set, teams, master_player_categories, full_roster_columns
+from load_constants import categories, years, stat_set, teams, master_player_categories, full_roster_columns, current_year
 from load_data import get_full_roster, get_player_cats, get_pbp_data
 from converters import convert_category, convert_team
 from formatters import format_name, format_cat, joiner, underline
@@ -49,7 +49,7 @@ def random_stat():
 # obtains a player statistic with the given name, year, and category
 # if year is None, obtains career stats
 def player_stat(name, year, category, position=None):
-    if year is not None and (int(year) < 1999 or int(year) > 2021):
+    if year is not None and (int(year) < 1999 or int(year) > current_year):
         return None
     if category == None:
         return None
@@ -308,7 +308,7 @@ def get_stat(df, cat, pos="DEFAULT", player=""):
 # obtains a team statistic from the given name, defense or offense, year, and category
 # pos - True if on offense (has possession)
 def team_stat(name, pos, year, category):
-    if year is not None and (int(year) < 1999 or int(year) > 2021):
+    if year is not None and (int(year) < 1999 or int(year) > current_year):
         return None
     act_name = convert_team(name, "abbrev")
     if act_name == "oak" or act_name == "lv":
